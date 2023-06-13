@@ -12,7 +12,9 @@ public class Main {
             DataOutputStream dataOutputStream =new DataOutputStream(socket.getOutputStream());
 
             dataOutputStream.writeUTF("hola");
-            
+
+            dataOutputStream.flush();
+            dataOutputStream.close();
             socket.close();
 
         } catch (IOException e) {
