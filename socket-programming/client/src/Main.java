@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-
             Socket socket = new Socket("localhost", 3002);
+
             DataOutputStream dataOutputStream =new DataOutputStream(socket.getOutputStream());
 
             dataOutputStream.writeUTF("hola");
