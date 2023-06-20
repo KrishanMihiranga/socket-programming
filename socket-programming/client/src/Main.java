@@ -1,6 +1,6 @@
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Main {
     
@@ -9,13 +9,26 @@ public class Main {
         try {
             Socket socket = new Socket("localhost", 3002);
 
-            DataOutputStream dataOutputStream =new DataOutputStream(socket.getOutputStream());
+            DataInputStream dataInputStream =new DataInputStream(socket.getInputStream());
+            DataOutputStream dataOutputStream=new DataOutputStream(socket.getOutputStream());
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            String message="";
+            String reply="";
 
-            dataOutputStream.writeUTF("hola");
+            while (!message.equals("end-chat")){
+                reply = bufferedReader.readLine();
+                dataOutputStream.writeUTF(reply);
+                dataOutputStream.flush();
 
-            dataOutputStream.flush();
+                message = dataInputStream.readUTF();
+                System.out.println("Server : "+message);
+
+            }
+
             dataOutputStream.close();
+            dataInputStream.close();
             socket.close();
+            bufferedReader.close();
 
         } catch (IOException e) {
             e.printStackTrace();
